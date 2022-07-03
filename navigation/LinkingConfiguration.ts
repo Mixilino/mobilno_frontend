@@ -7,22 +7,22 @@
 import { LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 
-import { RootStackParamList } from '../types';
+import { AuthStackParamList } from '../types';
 
-const linking: LinkingOptions<RootStackParamList> = {
+const linking: LinkingOptions<AuthStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
-      Root: {
+      Unprotected: {
         screens: {
-          TabOne: {
+          SignIn: {
             screens: {
-              TabOneScreen: 'one',
+              SignInScreen: 'SignIn',
             },
           },
-          TabTwo: {
+          SignUp: {
             screens: {
-              TabTwoScreen: 'two',
+              SignUpScreen: 'SignUp',
             },
           },
         },

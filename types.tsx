@@ -3,33 +3,54 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {CompositeScreenProps, NavigatorScreenParams} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import TaskModel from "./model/TaskModel";
 
 declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
-  }
+    namespace ReactNavigation {
+        interface RootParamList extends AuthStackParamList,
+            AuthenticatedStackParamList { }
+    }
 }
 
-export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
-  NotFound: undefined;
+export type AuthStackParamList = {
+    Auth: NavigatorScreenParams<AuthTabParamList> | undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-  RootStackParamList,
-  Screen
->;
+export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =
+    NativeStackScreenProps<AuthStackParamList,
+        Screen>;
 
-export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+export type AuthTabParamList = {
+    SignIn: undefined;
+    SignUp: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
->;
+export type AuthTabScreenProps<Screen extends keyof AuthTabParamList> =
+    CompositeScreenProps<BottomTabScreenProps<AuthTabParamList, Screen>,
+        NativeStackScreenProps<AuthStackParamList>>;
+
+
+export type AuthenticatedStackParamList = {
+    Authenticated: NavigatorScreenParams<AuthenticatedTabParamList> | undefined;
+    SingleTaskModal: {task:TaskModel};
+};
+export type AuthenticatedStackScreenProps<Screen extends keyof AuthenticatedStackParamList> = NativeStackScreenProps<AuthenticatedStackParamList,
+    Screen>;
+
+export type AuthenticatedTabParamList = {
+    Tasks: undefined;
+    NewTask: undefined;
+    Account: undefined;
+};
+export type AuthenticatedTabScreenProps<Screen extends keyof AuthenticatedTabParamList> =
+    CompositeScreenProps<BottomTabScreenProps<AuthenticatedTabParamList, Screen>,
+    NativeStackScreenProps<AuthenticatedStackParamList>>;
+
+
+export type RestError = {
+    status_code: number;
+    message: string;
+}
