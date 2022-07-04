@@ -3,27 +3,25 @@ import * as React from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import useColorScheme from "../hooks/useColorScheme";
 import Colors from "../constants/Colors";
-import {FontAwesome} from "@expo/vector-icons";
-import {AuthenticatedTabParamList, AuthenticatedTabScreenProps} from "../types";
+import {FontAwesome5, MaterialIcons} from "@expo/vector-icons";
+import {AuthenticatedStackParamList, AuthenticatedTabParamList, AuthenticatedTabScreenProps,} from "../types";
 import TasksScreen from "../screens/TasksScreen";
 import AccountScreen from "../screens/AccountScreen";
 import NewTaskScreen from "../screens/NewTaskScreen";
 import SingleTaskScreen from "../screens/SingleTaskScreen";
 
-const StackAuthenticated = createNativeStackNavigator();
+const StackAuthenticated = createNativeStackNavigator<AuthenticatedStackParamList>();
 
 export default function AuthenticatedStack() {
     return (
         <StackAuthenticated.Navigator>
             <StackAuthenticated.Screen name="Authenticated" component={BottomTabNavigatorAuthenticated}
                                        options={{headerShown: false}}/>
-            {/*<StackAuthenticated.Group screenOptions={{presentation: 'modal', headerTitleAlign: 'center',}}>*/}
-            {/*    <StackAuthenticated.Screen name="Modal" component={ModalScreen}/>*/}
-            {/*</StackAuthenticated.Group>*/}
-            <BottomTab.Group screenOptions={{presentation: 'modal'}}>
-                <BottomTab.Screen name="SingleTaskModal" component={SingleTaskScreen}/>
-            </BottomTab.Group>
-
+            <StackAuthenticated.Group screenOptions={{presentation: 'modal'}}>
+                <StackAuthenticated.Screen name="SingleTaskModal" component={SingleTaskScreen}
+                                           options={{title: '', headerStyle: {backgroundColor: '#000'}}}
+                />
+            </StackAuthenticated.Group>
         </StackAuthenticated.Navigator>
     );
 }
@@ -45,6 +43,8 @@ function BottomTabNavigatorAuthenticated() {
                     component={TasksScreen}
                     options={({navigation}: AuthenticatedTabScreenProps<'Tasks'>) => ({
                         title: 'Tasks',
+                        tabBarIcon: ({color}) => <FontAwesome5 size={30} style={{marginBottom: -3}} name="tasks"
+                                                               color={color}/>,
                     })}
                 />
                 <BottomTab.Screen
@@ -52,7 +52,8 @@ function BottomTabNavigatorAuthenticated() {
                     component={NewTaskScreen}
                     options={{
                         title: 'New Task',
-                        tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
+                        tabBarIcon: ({color}) => <MaterialIcons size={30} style={{marginBottom: -3}} name="add-task"
+                                                                color={color}/>,
                     }}
                 />
                 <BottomTab.Screen
@@ -60,20 +61,11 @@ function BottomTabNavigatorAuthenticated() {
                     component={AccountScreen}
                     options={{
                         title: 'Account',
-                        tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
+                        tabBarIcon: ({color}) => <MaterialIcons size={30} style={{marginBottom: -3}}
+                                                                name="account-circle" color={color}/>,
                     }}
                 />
             </BottomTab.Group>
         </BottomTab.Navigator>
     );
-}
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-    name: React.ComponentProps<typeof FontAwesome>['name'];
-    color: string;
-}) {
-    return <FontAwesome size={30} style={{marginBottom: -3}} {...props} />;
 }

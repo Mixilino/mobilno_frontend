@@ -34,22 +34,7 @@ function BottomTabNavigatorAuth() {
                 component={SignInScreen}
                 options={({navigation}: AuthTabScreenProps<'SignIn'>) => ({
                     title: 'Sign in',
-                    tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
-
-                    // headerRight: () => (
-                    //   <Pressable
-                    //     onPress={() => navigation.navigate('Modal')}
-                    //     style={({ pressed }) => ({
-                    //       opacity: pressed ? 0.5 : 1,
-                    //     })}>
-                    //     <FontAwesome
-                    //       name="info-circle"
-                    //       size={25}
-                    //       color={Colors[colorScheme].text}
-                    //       style={{ marginRight: 15 }}
-                    //     />
-                    //   </Pressable>
-                    // ),
+                    tabBarIcon: ({color}) => <TabBarIcon name="sign-in" color={color}/>,
                 })}
             />
             <BottomTab.Screen
@@ -57,7 +42,7 @@ function BottomTabNavigatorAuth() {
                 component={SignUpScreen}
                 options={{
                     title: 'Sign up',
-                    tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
+                    tabBarIcon: ({color}) => <TabBarIcon name="user-plus" color={color}/>,
                 }}
             />
         </BottomTab.Navigator>

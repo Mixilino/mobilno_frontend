@@ -7,14 +7,14 @@ import {ToastAndroid} from "react-native";
 interface AuthContextInterface {
     jwtToken: string | null;
     isAuthenticated: boolean;
-    signIn: (token: string) => void;
+    signIn: (token: string, welcome?:boolean) => void;
     signOut: () => void;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
     jwtToken: '',
     isAuthenticated: false,
-    signIn: async (token: string) => {
+    signIn: async (token: string, welcome?: boolean) => {
     },
     signOut: async () => {
     }
@@ -26,15 +26,15 @@ interface AuthContextProviderProps {
 
 function AuthContextProvider({children}: AuthContextProviderProps) {
     const [authToken, setAuthToken] = useState<string | null>(null);
-    const signIn = async (token: string) => {
+    const signIn = async (token: string, welcome?: boolean) => {
         setAuthToken(token);
         await AsyncStorage.setItem('jwt', token);
-        ToastAndroid.show('Signed In', ToastAndroid.LONG);
+        ToastAndroid.show(welcome ? 'Welcome back' : 'Signed In', 1000);
     }
     const signOut = async () => {
         setAuthToken(null);
         await AsyncStorage.removeItem('jwt');
-        ToastAndroid.show('Signed Out', ToastAndroid.LONG);
+        ToastAndroid.show('Signed Out', 1000);
     }
     const value = {
         jwtToken: authToken,

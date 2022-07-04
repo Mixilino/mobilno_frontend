@@ -1,33 +1,34 @@
 import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import * as React from 'react';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect} from 'react';
 import {ColorSchemeName} from 'react-native';
 import useColorScheme from '../hooks/useColorScheme';
 import {AuthContext} from "../store/authContext";
 import AuthStack from "./AuthStack";
 import AuthenticatedStack from "./AuthenticatedStack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import LinkingConfiguration from "./LinkingConfiguration";
+import jwtDecode from "jwt-decode";
+import {jwtPayload} from "../types";
 
 export default function Root() {
-    const [isTryingLogin, setIsTryingLogin] = useState(true);
     const colorScheme = useColorScheme();
     const authCtx = useContext(AuthContext);
 
     useEffect(() => {
         async function readJwtFromStorage() {
-            // const storedToken = await AsyncStorage.getItem('jwt');
-            // if (storedToken) {
-            //     authCtx.signIn(storedToken);
-            // }
-            setIsTryingLogin(false)
+            const storedToken = await AsyncStorage.getItem('jwt');
+            if (storedToken) {
+                const token = jwtDecode<jwtPayload>(storedToken);
+                const expires = new Date(token.exp * 1000);
+                if (expires > new Date()) {
+                    authCtx.signIn(storedToken, true);
+                }
+            }
         }
 
         readJwtFromStorage()
-    }, [])
-    if (isTryingLogin) {
-        // return <View><ActivityIndicator size={"large"}/></View>
-    }
+    }, []);
+
     return <Navigation colorScheme={colorScheme}/>
 }
 

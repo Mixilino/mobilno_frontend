@@ -23,7 +23,7 @@ export const useSignUp = () => {
     } = useMutation((vars: signInVariables) => signUpRequest(vars), {
         onSuccess: () => {
             navigation.navigate('SignIn');
-            ToastAndroid.show('Successfully created account', ToastAndroid.LONG)
+            ToastAndroid.show('Successfully created account', ToastAndroid.SHORT)
         },
         onError: (error: AxiosError) => {
             const err = <RestError>error.response?.data;

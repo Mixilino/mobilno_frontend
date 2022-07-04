@@ -11,7 +11,8 @@ import TaskModel from "./model/TaskModel";
 declare global {
     namespace ReactNavigation {
         interface RootParamList extends AuthStackParamList,
-            AuthenticatedStackParamList { }
+            AuthenticatedStackParamList {
+        }
     }
 }
 
@@ -35,10 +36,12 @@ export type AuthTabScreenProps<Screen extends keyof AuthTabParamList> =
 
 export type AuthenticatedStackParamList = {
     Authenticated: NavigatorScreenParams<AuthenticatedTabParamList> | undefined;
-    SingleTaskModal: {task:TaskModel};
+    SingleTaskModal: { taskId: number };
 };
 export type AuthenticatedStackScreenProps<Screen extends keyof AuthenticatedStackParamList> = NativeStackScreenProps<AuthenticatedStackParamList,
     Screen>;
+export type SingleTaskModalProps = NativeStackScreenProps<AuthenticatedStackParamList, "SingleTaskModal">;
+
 
 export type AuthenticatedTabParamList = {
     Tasks: undefined;
@@ -47,10 +50,17 @@ export type AuthenticatedTabParamList = {
 };
 export type AuthenticatedTabScreenProps<Screen extends keyof AuthenticatedTabParamList> =
     CompositeScreenProps<BottomTabScreenProps<AuthenticatedTabParamList, Screen>,
-    NativeStackScreenProps<AuthenticatedStackParamList>>;
+        NativeStackScreenProps<AuthenticatedStackParamList>>;
 
 
 export type RestError = {
     status_code: number;
     message: string;
+}
+
+export type jwtPayload ={
+    authorized: boolean;
+    exp: number;
+    user_id: number;
+    username: string;
 }

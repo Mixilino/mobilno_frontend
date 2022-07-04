@@ -48,7 +48,7 @@ const AuthForm = ({signIn}: AuthFormProps) => {
             <View style={{alignItems: 'center', width: '100%', marginTop: 80}}>
                 <Image source={require('../../assets/images/logo.png')} style={styles.image}/>
                 <TextInput style={styles.input} autoCapitalize="none" placeholder="username" value={username}
-                           onChangeText={setUsername}/>
+                           onChangeText={setUsername} importantForAutofill={"no"}/>
                 <View style={{width: '100%', alignItems: 'center', marginBottom: 20}}>
                     <TextInput style={styles.input} autoCapitalize="none" secureTextEntry={!showPassword}
                                placeholder="password"
@@ -59,7 +59,7 @@ const AuthForm = ({signIn}: AuthFormProps) => {
                         text="Show password"
                         onPress={() => setShowPassword(!showPassword)}/>
                 </View>
-                <Button color='#665656' title={signIn ? 'Sign In' : 'Sign Up'}
+                <Button title={signIn ? 'Sign In' : 'Sign Up'}
                         onPress={onSubmitHandler}/>
             </View>
         </View>
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
         width: '50%',
         borderRadius: 7,
         marginVertical: 10,
-        paddingLeft: 5
+        paddingLeft: 5,
+        fontSize:20,
     }
 });
 

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {View} from '../components/Themed';
+import {ScrollView, Text, View} from '../components/Themed';
 import React from "react";
 import AuthForm from "../components/auth/AuthForm";
 

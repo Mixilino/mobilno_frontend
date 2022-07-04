@@ -25,16 +25,19 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         width: '100%',
-        marginTop: 100
+        marginTop: '20%',
     },
     text: {
-        fontSize: 40
+        fontSize: 30,
     },
     input: {
         backgroundColor: '#fff',
         width: '50%',
         borderRadius: 7,
         marginVertical: 10,
-        paddingLeft: 5
+        paddingLeft: 5,
+        fontSize: 20,
+        marginTop: 30,
+        marginBottom: 30
     }
 })
